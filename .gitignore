@@ -1,0 +1,15 @@
+.DS_Store
+*.swp
+
+*.local.crt
+*.local.csr
+*.local.key
+
+ca.crt
+ca.key
+ca.config
+ca.db.certs/
+ca.db.index
+ca.db.index.attr
+ca.db.index.attr.old
+ca.db.serial

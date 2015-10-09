@@ -21,7 +21,7 @@ fi
 
 if [ ! -f $CERT.key ]; then
 	echo "No $CERT.key round. Generating one"
-	openssl genrsa -out $CERT.key 1024
+	openssl genrsa -out $CERT.key 4096
 	echo ""
 fi
 
@@ -29,7 +29,7 @@ fi
 CONFIG="user-cert.conf"
 cat >$CONFIG <<EOT
 [ req ]
-default_bits			= 1024
+default_bits			= 4096
 default_keyfile			= user.key
 distinguished_name		= req_distinguished_name
 string_mask			= nombstr

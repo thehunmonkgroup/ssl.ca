@@ -67,6 +67,18 @@ extendedKeyUsage	= serverAuth,clientAuth,msSGC,nsSGC
 basicConstraints	= critical,CA:false
 EOT
 
+cat >extensions.config <<EOT
+nsCertType			= server
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = ${CERT}
+DNS.2 = *.${CERT}
+EOT
+
+
 #  revoke an existing old certificate
 if [ -f $CERT.crt ]; then
     openssl ca -revoke $CERT.crt -config ca.config
@@ -74,12 +86,13 @@ fi
 
 #  sign the certificate
 echo "CA signing: $CERT.csr -> $CERT.crt:"
-openssl ca -config ca.config -out $CERT.crt -infiles $CERT.csr
+openssl ca -config ca.config -extfile extensions.config -out $CERT.crt -infiles $CERT.csr
 echo "CA verifying: $CERT.crt <-> CA cert"
 openssl verify -CAfile ca.crt $CERT.crt
 
 #  cleanup after SSLeay 
 #rm -f ca.config
+rm -f extensions.config
 rm -f ca.db.serial.old
 rm -f ca.db.index.old
 

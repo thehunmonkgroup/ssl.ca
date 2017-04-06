@@ -53,14 +53,17 @@ emailAddress			= Email Address
 emailAddress_max		= 40
 [ v3_req ]
 nsCertType			= server
-basicConstraints		= critical,CA:false
-subjectAltName    = DNS:*.${CERT}
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = ${CERT}
+DNS.2 = *.${CERT}
 EOT
 
 echo "Fill in certificate data"
 openssl req -new -config $CONFIG -key $CERT.key -out $CERT.csr
-
-rm -f $CONFIG
 
 echo ""
 echo "You may now run ./sign-server-cert.sh to get it signed"

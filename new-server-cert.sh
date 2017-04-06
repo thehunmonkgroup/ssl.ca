@@ -54,6 +54,7 @@ emailAddress_max		= 40
 [ v3_req ]
 nsCertType			= server
 basicConstraints		= critical,CA:false
+subjectAltName    = DNS:*.${CERT}
 EOT
 
 echo "Fill in certificate data"

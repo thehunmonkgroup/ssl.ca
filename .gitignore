@@ -13,3 +13,4 @@ ca.db.index
 ca.db.index.attr
 ca.db.index.attr.old
 ca.db.serial
+server-cert.conf
